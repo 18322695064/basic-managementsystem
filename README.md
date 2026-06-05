@@ -1,12 +1,16 @@
 # basic-managementsystem
 管理系统 (Management System) — 一套前后端分离的企业级后台管理系统。
 技术栈
-层级	技术
 前端	Vue 3 + Vite 8 + Ant Design Vue 4 + Pinia 3 + Vue Router 4
+
 后端	Spring Boot 3.2.5 + MyBatis-Plus 3.5.5 + Java 17
+
 安全	Spring Security + JWT (jjwt) + BCrypt
+
 数据库	PostgreSQL + Redis
+
 工具	Hutool, EasyExcel, SpringDoc OpenAPI, vue-i18n
+
 功能模块
 - 系统管理：用户 / 角色 / 菜单权限 / 组织架构 / 字典 / 参数配置 / 通知公告
 - 监控管理：操作日志 / 登录日志 / 在线用户
