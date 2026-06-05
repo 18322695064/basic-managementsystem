@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store'
 import request from '@/utils/request'
@@ -47,14 +47,21 @@ const getStatistics = async () => {
   loading.value = false
 }
 
-const quickMenus = [
-  { title: '用户管理', icon: UserOutlined, path: '/system/user', color: '#1890ff' },
-  { title: '角色管理', icon: TeamOutlined, path: '/system/role', color: '#52c41a' },
-  { title: '菜单管理', icon: MenuOutlined, path: '/system/menu', color: '#faad14' },
-  { title: '字典管理', icon: BookOutlined, path: '/system/dict', color: '#722ed1' },
-  { title: '参数设置', icon: SettingOutlined, path: '/system/config', color: '#13c2c2' },
-  { title: '操作日志', icon: FileTextOutlined, path: '/monitor/operlog', color: '#f5222d' }
+const allQuickMenus = [
+  { title: '用户管理', icon: UserOutlined, path: '/system/user', color: '#1890ff', perms: ['system:user:list', 'system:user:query'] },
+  { title: '角色管理', icon: TeamOutlined, path: '/system/role', color: '#52c41a', perms: ['system:role:list', 'system:role:query'] },
+  { title: '菜单管理', icon: MenuOutlined, path: '/system/menu', color: '#faad14', perms: ['system:menu:list', 'system:menu:query'] },
+  { title: '字典管理', icon: BookOutlined, path: '/system/dict', color: '#722ed1', perms: ['system:dict:list', 'system:dict:query'] },
+  { title: '参数设置', icon: SettingOutlined, path: '/system/config', color: '#13c2c2', perms: ['system:config:list', 'system:config:query'] },
+  { title: '操作日志', icon: FileTextOutlined, path: '/monitor/operlog', color: '#f5222d', perms: ['system:log:list', 'monitor:operlog:list'] }
 ]
+
+const quickMenus = computed(() => {
+  const perms = userStore.permissions || []
+  if (perms.length === 0) return []
+  if (perms.includes('*:*:*')) return allQuickMenus
+  return allQuickMenus.filter(menu => menu.perms.some(p => perms.includes(p)))
+})
 
 onMounted(() => {
   getStatistics()

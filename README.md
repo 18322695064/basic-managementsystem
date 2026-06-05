@@ -1,6 +1,6 @@
 # basic-managementsystem
 
-**管理系统 (Management System)** — 前后端分离的企业级后台管理系统。基于 RBAC 权限模型，提供用户、角色、菜单、部门、字典、代码生成等核心功能，可作为业务系统的快速开发脚手架。
+**管理系统 (Management System)** — 企业级的前后端分离的后台管理系统。基于 RBAC 权限模型，提供用户、角色、菜单、部门、字典、代码生成等核心功能，可作为业务系统的快速开发脚手架。
 
 ---
 
@@ -130,7 +130,8 @@ cd frontend && npm install && npm run dev   # 端口 3000
 ```
 
 默认管理员账号：`admin` / `superAdmin@088`
-
+普通用户：`wangbin` / `123456`
+普通用户：`zhangsan`/`111111`
 ---
 
 ## 运行测试
@@ -145,3 +146,6 @@ cd frontend && npx playwright test
 # 后端测试
 cd backend && mvn test
 ```
+如果大家有java方面的项目可以联系我，联系方式：qq-1131401851
+如果觉得对你有帮助，请点一下star，可以请我喝杯咖啡吗？你的支持是我的动力：
+![alt text](微信图片_20260605155402_96_44.jpg)

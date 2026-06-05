@@ -33,6 +33,8 @@ service.interceptors.response.use(
       }
       if (res.code === 401) {
         removeToken()
+        localStorage.removeItem('openedTabs')
+        localStorage.removeItem('activeTab')
         router.push('/login')
       }
       return Promise.reject(new Error(res.msg || '请求失败'))
@@ -44,6 +46,8 @@ service.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           removeToken()
+          localStorage.removeItem('openedTabs')
+          localStorage.removeItem('activeTab')
           router.push('/login')
           if (!error.config?.silent) message.error('登录已过期，请重新登录')
           break

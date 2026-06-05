@@ -1,5 +1,6 @@
 package com.management.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.management.annotation.Log;
 import com.management.common.Result;
 import com.management.entity.SysMenu;
@@ -22,7 +23,15 @@ public class SysMenuController {
     @GetMapping("/list")
     public Result<List<SysMenu>> list(@RequestParam(required = false) String menuName,
                                        @RequestParam(required = false) String status) {
-        return Result.success(menuService.selectMenuList(null));
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        if (menuName != null && !menuName.isEmpty()) {
+            wrapper.like(SysMenu::getMenuName, menuName);
+        }
+        if (status != null && !status.isEmpty()) {
+            wrapper.eq(SysMenu::getStatus, status);
+        }
+        wrapper.orderByAsc(SysMenu::getSortOrder);
+        return Result.success(menuService.list(wrapper));
     }
 
     @PreAuthorize("@ss.hasPermi('system:menu:query')")

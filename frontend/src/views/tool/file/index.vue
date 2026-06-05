@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { listFile, delFile } from '@/api/file'
+import { listFile, delFile, downloadFile } from '@/api/file'
 import { getToken } from '@/utils/auth'
 import { message, Modal } from 'ant-design-vue'
 import { DownloadOutlined, DeleteOutlined } from '@ant-design/icons-vue'
@@ -47,8 +47,18 @@ const getList = async () => {
   }
 }
 
-const handleDownload = (record) => {
-  window.open('/api/system/file/download/' + record.id, '_blank')
+const handleDownload = async (record) => {
+  try {
+    const blob = await downloadFile(record.id)
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = record.originalName
+    a.click()
+    window.URL.revokeObjectURL(url)
+  } catch {
+    message.error('下载失败')
+  }
 }
 
 const handleDelete = (record) => {

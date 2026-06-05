@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
+import { getToken } from '@/utils/auth'
 
 export const useAppStore = defineStore('app', {
   state: () => ({
     darkMode: localStorage.getItem('darkMode') === 'true',
-    openedTabs: JSON.parse(localStorage.getItem('openedTabs') || '[]'),
-    activeTab: localStorage.getItem('activeTab') || ''
+    openedTabs: getToken() ? JSON.parse(localStorage.getItem('openedTabs') || '[]') : [],
+    activeTab: getToken() ? (localStorage.getItem('activeTab') || '') : ''
   }),
 
   actions: {

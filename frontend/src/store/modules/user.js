@@ -42,6 +42,8 @@ export const useUserStore = defineStore('user', {
         this.roles = []
         this.permissions = []
         removeToken()
+        localStorage.removeItem('openedTabs')
+        localStorage.removeItem('activeTab')
       }
     },
 
@@ -50,6 +52,8 @@ export const useUserStore = defineStore('user', {
       this.roles = []
       this.permissions = []
       removeToken()
+      localStorage.removeItem('openedTabs')
+      localStorage.removeItem('activeTab')
     }
   }
 })

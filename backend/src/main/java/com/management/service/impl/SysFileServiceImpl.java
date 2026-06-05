@@ -19,11 +19,8 @@ import java.util.Set;
 @Service
 public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> implements ISysFileService {
 
-    private static final Set<String> ALLOWED_EXTENSIONS = new HashSet<>(Arrays.asList(
-            ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp",
-            ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
-            ".txt", ".csv", ".zip", ".rar", ".7z",
-            ".mp4", ".mp3", ".wav", ".avi"
+    private static final Set<String> FORBIDDEN_EXTENSIONS = new HashSet<>(Arrays.asList(
+            ".exe", ".bat", ".sh", ".cmd", ".com", ".msi", ".vbs", ".ps1"
     ));
 
     private static final long MAX_FILE_SIZE = 50 * 1024 * 1024;
@@ -42,7 +39,7 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
                 ? originalName.substring(originalName.lastIndexOf(".")).toLowerCase()
                 : "";
 
-        if (!ext.isEmpty() && !ALLOWED_EXTENSIONS.contains(ext)) {
+        if (FORBIDDEN_EXTENSIONS.contains(ext)) {
             throw new RuntimeException("不支持的文件类型: " + ext);
         }
 
